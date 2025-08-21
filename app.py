@@ -93,12 +93,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ------------------ UI ------------------
-st.title("🌿 Hempcrete Net Carbon Storage Calculator")
+st.title("Hempcrete Net Carbon Storage Calculator")
 
 col1, col2 = st.columns([2,1])
 with col1:
     wall_area = st.number_input("Wall area (ft²)", min_value=1, value=1000, step=10)
-    zipcode = st.text_input("ZIP Code", value="10007")
+    zipcode = st.text_input("ZIP Code", value="12345")
 with col2:
     st.write("This calculator estimates **net carbon storage** over the lifecycle of your hempcrete wall project. \
              Enter your wall area and project ZIP code to get started!")
@@ -143,7 +143,7 @@ if st.button("Calculate"):
     st.plotly_chart(fig, use_container_width=True)
 
     # ------------------ COLLAPSIBLE DETAILS ------------------
-    with st.expander("📘 Show calculation details"):
+    with st.expander("Show calculation details"):
         st.write("**Formulas applied:**")
         st.code(f"""
 DU = wall_area_ft² × 0.092903 convert to m2
