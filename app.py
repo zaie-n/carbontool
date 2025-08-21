@@ -97,10 +97,10 @@ st.title("Hempcrete Net Carbon Storage Calculator")
 
 col1, col2 = st.columns([2,1])
 with col1:
-    wall_area = st.number_input("Wall area (ft²)", min_value=1, value=1000, step=10)
+    wall_area = st.number_input("Wall area (ft²)", min_value=1, value=1000, step=100)
     zipcode = st.text_input("ZIP Code", value="12345")
 with col2:
-    st.write("This calculator estimates **net carbon storage** over the lifecycle of your hempcrete wall project. \
+    st.write("This calculator estimates **net carbon storage** over the lifecycle of your hempcrete project. \
              Enter your wall area and project ZIP code to get started!")
 
 if st.button("Calculate"):
