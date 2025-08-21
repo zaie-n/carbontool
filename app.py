@@ -1,4 +1,4 @@
-# app.py – Hempcrete Net Carbon Storage Calculator (Americhanvre-style)
+# app.py – Hempcrete Net Carbon Storage Calculator
 # Run with: streamlit run app.py
 
 import math
@@ -24,7 +24,8 @@ st.markdown(
     .block-container {{ padding-top: 2rem; padding-bottom: 2rem; }}
     h1, h2, h3, h4, h5, h6 {{ color:{PRIMARY}; font-family: 'Helvetica Neue', Arial, sans-serif; }}
     .ameri-hero {{
-        background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(247,244,239,0.95)), url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop');
+        background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(247,244,239,0.95)),
+        url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop');
         background-size: cover; background-position: center; border-radius: 18px; padding: 3rem; margin-bottom: 1rem;
         box-shadow: 0 10px 30px rgba(0,0,0,0.06);
     }}
@@ -87,10 +88,7 @@ def driving_distance_km(origin_lat, origin_lon, dest_lat, dest_lon):
             return dist_m / 1000.0
     except Exception:
         pass
-    # Fallback
     return haversine_km(origin_lat, origin_lon, dest_lat, dest_lon) * 1.2
-
-# Module calculations
 
 def calc_A4_kg(DU: float, distance_km: float) -> float:
     tonne_km = (DU * MASS_T_PER_DU) * distance_km
@@ -102,8 +100,8 @@ st.markdown(
     <div class="ameri-hero">
       <div class="pill">Hempcrete LCA</div>
       <h1>Estimate Net Carbon Storage</h1>
-      <p class="small">Enter your project’s <strong>wall area</strong> and <strong>ZIP code</strong>. We’ll compute life‑cycle module impacts (A1, A2, A4, A5, B1, C1–C4)
-      and total net carbon storage using your LCA assumptions.</p>
+      <p class="small">Enter your project’s <strong>wall area</strong> and <strong>ZIP code</strong>. 
+      We’ll compute life-cycle module impacts (A1, A2, A4, A5, B1, C1–C4) and total net carbon storage using your LCA assumptions.</p>
     </div>
     """,
     unsafe_allow_html=True,
@@ -116,12 +114,10 @@ with st.sidebar:
     st.caption("Origin: Port Newark–Elizabeth Marine Terminal (Port of NY/NJ)")
     submitted = st.button("Calculate")
 
-# Default compute when page loads or on submit
 if submitted or True:
     # Convert to DU (1 DU = 1 m²)
     DU = wall_area_ft2 * 0.092903
 
-    # Geocode + route distance
     dest = geocode_zip(zip_code)
     if dest is None:
         st.error("Invalid ZIP code. Please enter a valid US ZIP.")
@@ -139,7 +135,7 @@ if submitted or True:
 
     total = A1 + A2 + A4 + A5 + B1 + C
 
-    # -------------- OUTPUT --------------
+    # Results
     st.subheader("Results")
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -157,14 +153,15 @@ if submitted or True:
 
     # Breakdown chart
     chart_df = pd.DataFrame({
-        "Module": ["A1 Raw materials", "A2 Upstream transport", "A4 Site transport", "A5 Installation", "B1 Use phase", "C1–C4 End-of-life"],
+        "Module": ["A1 Raw materials", "A2 Upstream transport", "A4 Site transport",
+                   "A5 Installation", "B1 Use phase", "C1–C4 End-of-life"],
         "kg CO₂e": [A1, A2, A4, A5, B1, C]
     })
     fig = px.bar(chart_df, x="Module", y="kg CO₂e", text_auto=True)
-    fig.update_layout(yaxis_title="kg CO₂e", xaxis_title="Lifecycle Module", bargap=0.25, plot_bgcolor="white")
+    fig.update_layout(yaxis_title="kg CO₂e", xaxis_title="Lifecycle Module",
+                      bargap=0.25, plot_bgcolor="white")
     st.plotly_chart(fig, use_container_width=True)
 
-    # Details / equations
     with st.expander("Calculation details & assumptions"):
         st.markdown(
             f"""
@@ -175,9 +172,9 @@ if submitted or True:
             - **A5** = DU × {A5_PER_DU} kg CO₂e
             - **B1** = DU × {B1_PER_DU} kg CO₂e
             - **C1–C4** = DU × {C_PER_DU} kg CO₂e
-            - **Origin used for trucking distance**: Port Newark–Elizabeth (40.6840, −74.1419).
-            - **Routing**: OSRM driving distance when available; fallback: haversine × 1.2 road factor.
+            - **Origin**: Port Newark–Elizabeth (40.6840, −74.1419).
+            - **Routing**: OSRM driving distance when available; fallback: haversine × 1.2.
             """
         )
 
-    st.info("Negative totals indicate net carbon storage (biogenic uptake exceeds fossil/process emissions) under the declared LCA scope.")
+    st.info("Negative totals indicate net carbon storage (biogenic uptake exceeds fossil/process emissions).")
