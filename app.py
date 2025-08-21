@@ -120,8 +120,7 @@ if st.button("Calculate"):
     C  = DU * C_PER_DU
     
     total = A1 + A2 + A4 + A5 + B1 + C
-    
-    # ------------------ RESULTS ------------------
+        # ------------------ RESULTS ------------------
     colA, colB, colC = st.columns(3)
     with colA:
         st.markdown(f'<div class="result-card"><h3>Net Carbon Storage</h3><div class="result-value">{total:.1f} kg CO₂e</div></div>', unsafe_allow_html=True)
@@ -143,14 +142,18 @@ if st.button("Calculate"):
                       showlegend=False)
     st.plotly_chart(fig, use_container_width=True)
 
-    # ------------------ DETAILS ------------------
-    st.subheader("Calculation details")
-    st.code(f"""
-DU = wall_area_ft² × 0.092903
+    # ------------------ COLLAPSIBLE DETAILS ------------------
+    with st.expander("📘 Show calculation details"):
+        st.write("**Formulas applied:**")
+        st.code(f"""
+DU = wall_area_ft² × 0.092903 convert to m2
 A1 = DU × {A1_PER_DU}
 A2 = DU × {A2_PER_DU}
 A4 = (DU × {MASS_T_PER_DU} t) × distance_km × {EF_TRUCK}
 A5 = DU × {A5_PER_DU}
 B1 = DU × {B1_PER_DU}
 C1–C4 = DU × {C_PER_DU}
-    """)
+        """)
+        
+        st.write("**Raw module results (kg CO₂e):**")
+        st.dataframe(df.style.format({"kgCO2e": "{:.1f}"}))
