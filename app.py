@@ -121,14 +121,26 @@ if st.button("Calculate"):
     
     total = A1 + A2 + A4 + A5 + B1 + C
         # ------------------ RESULTS ------------------
-    colA, colB, colC = st.columns(3)
+    colA = st.columns(1)
     with colA:
+      if total < 0:
+        # Net carbon storage (negative = sink)
+        with colA:
+            st.markdown(
+                f'<div class="result-card"><h3>Net Carbon Storage</h3>'
+                f'<div class="result-value">{total:.1f} kg CO₂e</div></div>',
+                unsafe_allow_html=True
+            )
+    else:
+        # Net carbon emissions (positive = source)
+        with colA:
+            st.markdown(
+                f'<div class="result-card"><h3>Net Carbon Emissions</h3>'
+                f'<div class="result-value">{total:.1f} kg CO₂e</div></div>',
+                unsafe_allow_html=True
+            )
         st.markdown(f'<div class="result-card"><h3>Net Carbon Storage</h3><div class="result-value">{total:.1f} kg CO₂e</div></div>', unsafe_allow_html=True)
-    with colB:
-        st.markdown(f'<div class="result-card"><h3>Declared Units (DU)</h3><div class="result-value">{DU:.2f}</div></div>', unsafe_allow_html=True)
-    with colC:
-        st.markdown(f'<div class="result-card"><h3>Truck Distance</h3><div class="result-value">{dist_km:.1f} km</div></div>', unsafe_allow_html=True)
-
+    
     # ------------------ CHART ------------------
     df = pd.DataFrame({
         "Module": ["A1 Raw materials","A2 Upstream transport","A4 Site transport",
