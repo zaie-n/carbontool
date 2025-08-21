@@ -124,14 +124,14 @@ if st.button("Calculate"):
     if total < 0:
         card_html = f"""
         <div class="result-card" style="background-color:#e6f4ea;">
-            <h3>Net Carbon Storage</h3>
+            <h3>Net Carbon Storage :) </h3>
             <div class="result-value">{abs(total):.1f} kg CO₂e stored</div>
         </div>
         """
     else:
         card_html = f"""
         <div class="result-card" style="background-color:#fdecea;">
-            <h3>Net Carbon Emissions</h3>
+            <h3>Net Carbon Emissions :( </h3>
             <div class="result-value">{total:.1f} kg CO₂e emitted</div>
         </div>
         """
