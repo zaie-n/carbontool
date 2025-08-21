@@ -43,7 +43,7 @@ st.markdown(
 # DU (Declared Unit) = 1 m² of wall at 0.3 m thickness
 A1_PER_DU = -43.95   # kg CO2e
 A2_PER_DU = 8.42     # kg CO2e (fixed EU->US chain)
-A5_PER_DU = 42.44    # kg CO2e
+A5_PER_DU = 42.4    # kg CO2e
 B1_PER_DU = -31.70   # kg CO2e
 C_PER_DU  = 11.94    # kg CO2e  (C1–C4)
 
@@ -100,7 +100,7 @@ st.markdown(
     <div class="ameri-hero">
       <div class="pill">Hempcrete LCA</div>
       <h1>Estimate Net Carbon Storage</h1>
-      <p class="small">Enter your project’s <strong>wall area</strong> and <strong>ZIP code</strong>. 
+      <p class="small">Enter your project’s <strong>total wall area</strong> and <strong>ZIP code</strong>. 
       We’ll compute life-cycle module impacts (A1, A2, A4, A5, B1, C1–C4) and total net carbon storage using your LCA assumptions.</p>
     </div>
     """,
