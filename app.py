@@ -140,8 +140,9 @@ if st.button("Calculate"):
 
     # ------------------ CHART ------------------
     df = pd.DataFrame({
-        "Module": ["A1 Raw materials","A2 Upstream transport","A4 Site transport",
-                   "A5 Installation","B1 Use phase","C1–C4 End-of-life"],
+        "Module": ["biogenic sequestration during growing","Trans-Atlantic Shipping emissions","US domestic transportation emissions",
+                   "installation emissions","ongoing chemical carbonation","building demolition after 100-year service life, transportation to landfill (50 km
+distance), and disposal as inert material"],
         "kgCO2e": [A1, A2, A4, A5, B1, C]
     })
     fig = px.bar(df, x="Module", y="kgCO2e",
