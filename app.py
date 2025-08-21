@@ -131,7 +131,7 @@ if st.button("Calculate"):
                 f'<div class="result-value">{total:.1f} kg CO₂e</div></div>',
                 unsafe_allow_html=True
             )
-    else:
+        else:
         # Net carbon emissions (positive = source)
         with colA:
             st.markdown(
