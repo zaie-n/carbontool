@@ -140,15 +140,14 @@ if st.button("Calculate"):
 
     # ------------------ CHART ------------------
     df = pd.DataFrame({
-        "Module": ["biogenic sequestration during growing","Trans-Atlantic Shipping emissions","US domestic transportation emissions",
-                   "installation emissions","ongoing chemical carbonation","building demolition after 100-year service life, transportation to landfill (50 km
-distance), and disposal as inert material"],
+        "Module": ["A1 Raw materials","A2 Upstream transport","A4 Site transport",
+                   "A5 Installation","B1 Use phase","C1–C4 End-of-life"],
         "kgCO2e": [A1, A2, A4, A5, B1, C]
     })
     fig = px.bar(df, x="Module", y="kgCO2e",
                  text="kgCO2e", color="Module",
                  color_discrete_sequence=["#2E5041","#6B8F71","#C4B6A6","#88A093","#B6A19E","#F2E8CF"])
-    fig.update_layout(title="Lifecycle Module Breakdown", yaxis_title="kg CO₂e", template="simple_white",
+    fig.update_layout(title="Lifecycle Breakdown", yaxis_title="kg CO₂e",xaxis_title="Lifecycle Stage", template="simple_white",
                       showlegend=False)
     st.plotly_chart(fig, use_container_width=True)
 
