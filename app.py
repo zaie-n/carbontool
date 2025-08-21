@@ -100,8 +100,7 @@ st.markdown(
     <div class="ameri-hero">
       <div class="pill">Hempcrete LCA</div>
       <h1>Estimate Net Carbon Storage</h1>
-      <p class="small">Enter your project’s <strong>total wall area</strong> and <strong>ZIP code</strong>. 
-      We’ll compute life-cycle module impacts (A1, A2, A4, A5, B1, C1–C4) and total net carbon storage using your LCA assumptions.</p>
+      <p class="small">Enter your project’s <strong>total wall area</strong> and <strong>ZIP code</strong> to figure out how much carbon you can store when using Hempcrete!.</p>
     </div>
     """,
     unsafe_allow_html=True,
