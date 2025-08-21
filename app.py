@@ -58,7 +58,7 @@ st.set_page_config(page_title="Hempcrete Carbon Calculator", layout="wide")
 st.markdown("""
     <style>
     body {
-        background-color: #F7F4EF;
+        background-color: ##abcf3b;
         font-family: "Helvetica Neue", sans-serif;
     }
     h1, h2, h3 {
@@ -101,7 +101,7 @@ with col1:
     zipcode = st.text_input("ZIP Code", value="10007")
 with col2:
     st.write("This calculator estimates **net carbon storage** over the lifecycle of your hempcrete wall project. \
-             Enter your wall area and project ZIP code to get started.")
+             Enter your wall area and project ZIP code to get started!")
 
 if st.button("Calculate"):
     # Convert to DU
