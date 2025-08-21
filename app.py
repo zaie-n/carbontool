@@ -120,27 +120,24 @@ if st.button("Calculate"):
     C  = DU * C_PER_DU
     
     total = A1 + A2 + A4 + A5 + B1 + C
-        # ------------------ RESULTS ------------------
-    colA = st.columns(1)
-    with colA:
-      if total < 0:
-        # Net carbon storage (negative = sink)
-        with colA:
-            st.markdown(
-                f'<div class="result-card"><h3>Net Carbon Storage</h3>'
-                f'<div class="result-value">{total:.1f} kg CO₂e</div></div>',
-                unsafe_allow_html=True
-            )
-        else:
-        # Net carbon emissions (positive = source)
-        with colA:
-            st.markdown(
-                f'<div class="result-card"><h3>Net Carbon Emissions</h3>'
-                f'<div class="result-value">{total:.1f} kg CO₂e</div></div>',
-                unsafe_allow_html=True
-            )
-        st.markdown(f'<div class="result-card"><h3>Net Carbon Storage</h3><div class="result-value">{total:.1f} kg CO₂e</div></div>', unsafe_allow_html=True)
-    
+    # ------------------ RESULTS ------------------
+    if total < 0:
+        card_html = f"""
+        <div class="result-card" style="background-color:#e6f4ea;">
+            <h3>🌿 Net Carbon Storage</h3>
+            <div class="result-value">{abs(total):.1f} kg CO₂e stored</div>
+        </div>
+        """
+    else:
+        card_html = f"""
+        <div class="result-card" style="background-color:#fdecea;">
+            <h3>🔥 Net Carbon Emissions</h3>
+            <div class="result-value">{total:.1f} kg CO₂e emitted</div>
+        </div>
+        """
+
+    st.markdown(card_html, unsafe_allow_html=True)
+
     # ------------------ CHART ------------------
     df = pd.DataFrame({
         "Module": ["A1 Raw materials","A2 Upstream transport","A4 Site transport",
