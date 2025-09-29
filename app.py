@@ -160,8 +160,8 @@ if st.button("Calculate"):
         """
     st.markdown(card_html, unsafe_allow_html=True)
 
-#compare block
-     if compare:
+    # Comparator material
+    if compare:
         comp_per_DU = epd_value * thickness
         comp_total = DU * comp_per_DU
         delta = comp_total - total
@@ -188,13 +188,14 @@ if st.button("Calculate"):
             "kgCO2e": [total, comp_total]
         })
         fig2 = px.bar(
-            comp_df, x="Material", y="kgCO2e",
-            text="kgCO2e", color="Material",
+            comp_df, x="Material", y="kgCO2e", text="kgCO2e", color="Material",
             color_discrete_sequence=["#2E5041", "#B22222"]
         )
         fig2.update_layout(
             title="Hempcrete vs Supplier Material",
             yaxis_title="kg CO₂e (total project)",
-            template="simple_white"
+            template="simple_white",
+            font=dict(family="Georgia, serif", size=14),
+            plot_bgcolor="#f5f1eb", paper_bgcolor="#f5f1eb"
         )
         st.plotly_chart(fig2, use_container_width=True)
