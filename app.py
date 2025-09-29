@@ -161,7 +161,7 @@ if st.button("Calculate"):
     st.markdown(card_html, unsafe_allow_html=True)
 
 #compare block
-       if compare:
+     if compare:
         comp_per_DU = epd_value * thickness
         comp_total = DU * comp_per_DU
         delta = comp_total - total
