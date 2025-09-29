@@ -59,7 +59,7 @@ st.markdown("""
     <style>
     body {
         background-color: #f5f1eb; /* warm beige */
-        font-family: "Georgia", "Times New Roman", serif;
+        font-family: "Georgia", serif;
     }
     h1, h2, h3 {
         color: #2E5041;
@@ -111,6 +111,14 @@ with st.expander("➕ Add comparator material"):
         value=250.0,
         help="Paste the GWP value from the supplier's EPD (usually A1–A3, per m³ of material)."
     )
+    thickness = st.number_input(
+        "Wall thickness of comparator material (m)",
+        min_value=0.05,
+        max_value=1.0,
+        step=0.05,
+        value=0.30,
+        help="Enter the thickness of the comparator wall in meters (default 0.30 m)."
+    )
     compare = st.checkbox("Compare hempcrete to this material")
 
 # ------------------ CALCULATIONS ------------------
@@ -129,19 +137,6 @@ if st.button("Calculate"):
     C  = DU * C_PER_DU
     
     total = A1 + A2 + A4 + A5 + B1 + C
-    
-    # Hempcrete modules breakdown chart
-    df = pd.DataFrame({
-        "Module": ["A1 Raw materials","A2 Upstream transport","A4 Site transport",
-                   "A5 Installation","B1 Use phase","C1–C4 End-of-life"],
-        "kgCO2e": [A1, A2, A4, A5, B1, C]
-    })
-    fig = px.bar(df, x="Module", y="kgCO2e",
-                 text="kgCO2e", color="Module",
-                 color_discrete_sequence=["#2E5041","#6B8F71","#C4B6A6","#88A093","#B6A19E","#F2E8CF"])
-    fig.update_layout(title="Hempcrete Lifecycle Module Breakdown",
-                      yaxis_title="kg CO₂e", template="simple_white", showlegend=False)
-    st.plotly_chart(fig, use_container_width=True)
 
     # Results card
     if total < 0:
@@ -159,6 +154,24 @@ if st.button("Calculate"):
         </div>
         """
     st.markdown(card_html, unsafe_allow_html=True)
+
+    # Hempcrete modules breakdown chart
+    df = pd.DataFrame({
+        "Module": ["A1 Raw materials","A2 Upstream transport","A4 Site transport",
+                   "A5 Installation","B1 Use phase","C1–C4 End-of-life"],
+        "kgCO2e": [A1, A2, A4, A5, B1, C]
+    })
+    fig = px.bar(
+        df, x="Module", y="kgCO2e", text="kgCO2e", color="Module",
+        color_discrete_sequence=["#2E5041","#6B8F71","#C4B6A6","#88A093","#B6A19E","#F2E8CF"]
+    )
+    fig.update_layout(
+        title="Hempcrete Lifecycle Module Breakdown",
+        yaxis_title="kg CO₂e", template="simple_white",
+        font=dict(family="Georgia, serif", size=14),
+        showlegend=False, plot_bgcolor="#f5f1eb", paper_bgcolor="#f5f1eb"
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
     # Comparator material
     if compare:
