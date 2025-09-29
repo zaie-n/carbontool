@@ -129,6 +129,19 @@ if st.button("Calculate"):
     C  = DU * C_PER_DU
     
     total = A1 + A2 + A4 + A5 + B1 + C
+    
+    # Hempcrete modules breakdown chart
+    df = pd.DataFrame({
+        "Module": ["A1 Raw materials","A2 Upstream transport","A4 Site transport",
+                   "A5 Installation","B1 Use phase","C1–C4 End-of-life"],
+        "kgCO2e": [A1, A2, A4, A5, B1, C]
+    })
+    fig = px.bar(df, x="Module", y="kgCO2e",
+                 text="kgCO2e", color="Module",
+                 color_discrete_sequence=["#2E5041","#6B8F71","#C4B6A6","#88A093","#B6A19E","#F2E8CF"])
+    fig.update_layout(title="Hempcrete Lifecycle Module Breakdown",
+                      yaxis_title="kg CO₂e", template="simple_white", showlegend=False)
+    st.plotly_chart(fig, use_container_width=True)
 
     # Results card
     if total < 0:
@@ -147,26 +160,29 @@ if st.button("Calculate"):
         """
     st.markdown(card_html, unsafe_allow_html=True)
 
-    # Comparator material
-    if compare:
-        comp_per_DU = epd_value * 0.3
+#compare block
+       if compare:
+        comp_per_DU = epd_value * thickness
         comp_total = DU * comp_per_DU
         delta = comp_total - total
 
-        st.markdown("### 🆚 Comparison with Supplier Material")
-        st.markdown(f"""
-        **Supplier material (EPD):**
-        - Reported value: {epd_value:.1f} kg CO₂e / m³ (A1–A3)
-        - Normalized to 1 DU (0.3 m³ wall): {comp_per_DU:.1f} kg CO₂e / m² wall
-        - Total project emissions: {comp_total:.1f} kg CO₂e
+        # Show key outcome only
+        st.markdown(f"### ✅ Hempcrete saves **{delta:.1f} kg CO₂e** compared to this material")
 
-        **Hempcrete (full A1–C4 LCA):**
-        - Total project storage: {total:.1f} kg CO₂e
+        # Collapse technical details
+        with st.expander("Show comparison details"):
+            st.markdown(f"""
+            **Supplier material (EPD):**
+            - Reported value: {epd_value:.1f} kg CO₂e / m³ (A1–A3)
+            - Thickness assumed: {thickness:.2f} m
+            - Normalized per m² wall: {comp_per_DU:.1f} kg CO₂e / m² wall
+            - Total project emissions: {comp_total:.1f} kg CO₂e
 
-        **Net difference:**
-        - Hempcrete saves {delta:.1f} kg CO₂e compared to this material
-        """)
+            **Hempcrete (full A1–C4 LCA, 0.30 m thickness):**
+            - Total project storage: {total:.1f} kg CO₂e
+            """)
 
+        # Comparison chart
         comp_df = pd.DataFrame({
             "Material": ["Hempcrete (A1–C4)", "Comparator (A1–A3)"],
             "kgCO2e": [total, comp_total]
@@ -182,4 +198,3 @@ if st.button("Calculate"):
             template="simple_white"
         )
         st.plotly_chart(fig2, use_container_width=True)
-
