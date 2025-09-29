@@ -58,8 +58,8 @@ st.set_page_config(page_title="Hempcrete Carbon Calculator", layout="wide")
 st.markdown("""
     <style>
     body {
-        background-color: #F7F4EF;
-        font-family: "Helvetica Neue", sans-serif;
+        background-color: #f5f1eb; /* warm beige */
+        font-family: "Georgia", "Times New Roman", serif;
     }
     h1, h2, h3 {
         color: #2E5041;
@@ -77,10 +77,10 @@ st.markdown("""
         color: #fff;
     }
     .result-card {
-        background-color: white;
+        background-color: #e9e5dc; /* tinted beige */
         padding: 20px;
         border-radius: 15px;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.15);
         text-align: center;
         margin-bottom: 20px;
     }
