@@ -93,7 +93,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ------------------ UI ------------------
-st.title("🌿 Hempcrete Net Carbon Storage Calculator")
+st.title("Hempcrete Net Carbon Storage Calculator")
 
 col1, col2 = st.columns([2,1])
 with col1:
@@ -142,14 +142,14 @@ if st.button("Calculate"):
     if total < 0:
         card_html = f"""
         <div class="result-card" style="background-color:#e6f4ea;">
-            <h3>🌿 Net Carbon Storage</h3>
+            <h3>Net Carbon Storage</h3>
             <div class="result-value">{abs(total):.1f} kg CO₂e stored</div>
         </div>
         """
     else:
         card_html = f"""
         <div class="result-card" style="background-color:#fdecea;">
-            <h3>🔥 Net Carbon Emissions</h3>
+            <h3>Net Carbon Emissions</h3>
             <div class="result-value">{total:.1f} kg CO₂e emitted</div>
         </div>
         """
@@ -180,7 +180,7 @@ if st.button("Calculate"):
         delta = comp_total - total
 
         # Show key outcome only
-        st.markdown(f"### ✅ Hempcrete saves **{delta:.1f} kg CO₂e** compared to this material")
+        st.markdown(f"### Hempcrete saves **{delta:.1f} kg CO₂e** compared to this material")
 
         # Collapse technical details
         with st.expander("Show comparison details"):
