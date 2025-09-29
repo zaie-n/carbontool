@@ -102,6 +102,55 @@ with col1:
 with col2:
     st.write("This calculator estimates **net carbon storage** over the lifecycle of your hempcrete project. \
              Enter your wall area and project ZIP code to get started!")
+st.subheader("Comparator Material (Supplier EPD)")
+
+with st.expander("➕ Add comparator material"):
+    epd_value = st.number_input(
+        "Enter supplier EPD value (kg CO₂e per m³ of material)",
+        min_value=0.0,
+        step=1.0,
+        value=250.0,
+        help="Paste the GWP value from the supplier's EPD (usually A1–A3, per m³ of material)."
+    )
+    compare = st.checkbox("Compare hempcrete to this material")
+    # ------------------ COMPARATOR ------------------
+    if compare:
+        # Normalize supplier EPD to 1 DU (0.3 m³ of wall)
+        comp_per_DU = epd_value * 0.3
+        comp_total = DU * comp_per_DU
+
+        delta = comp_total - total
+
+        st.markdown("### 🆚 Comparison with Supplier Material")
+        st.markdown(f"""
+        **Supplier material (EPD):**
+        - Reported value: {epd_value:.1f} kg CO₂e / m³ (A1–A3)
+        - Normalized to 1 DU (0.3 m³ wall): {comp_per_DU:.1f} kg CO₂e / m² wall
+        - Total project emissions: {comp_total:.1f} kg CO₂e
+
+        **Hempcrete (full A1–C4 LCA):**
+        - Total project storage: {total:.1f} kg CO₂e
+
+        **Net difference:**
+        - Hempcrete saves {delta:.1f} kg CO₂e compared to this material
+        """)
+
+        # Visual comparison
+        comp_df = pd.DataFrame({
+            "Material": ["Hempcrete (A1–C4)", "Comparator (A1–A3)"],
+            "kgCO2e": [total, comp_total]
+        })
+        fig2 = px.bar(
+            comp_df, x="Material", y="kgCO2e",
+            text="kgCO2e", color="Material",
+            color_discrete_sequence=["#2E5041", "#B22222"]
+        )
+        fig2.update_layout(
+            title="Hempcrete vs Supplier Material",
+            yaxis_title="kg CO₂e (total project)",
+            template="simple_white"
+        )
+        st.plotly_chart(fig2, use_container_width=True)
 
 if st.button("Calculate"):
     # Convert to DU
