@@ -103,7 +103,7 @@ with col2:
     st.write("This calculator estimates **net carbon storage** over the lifecycle of your hempcrete wall project.")
 
 st.subheader("Alternate Material")
-with st.expander("➕ Add comparator material"):
+with st.expander("➕ Add alternate material"):
     epd_value = st.number_input(
         "Enter given EPD value of an alternate concrete (kg CO₂e per m³ of material)",
         min_value=0.0,
