@@ -102,22 +102,22 @@ with col1:
 with col2:
     st.write("This calculator estimates **net carbon storage** over the lifecycle of your hempcrete wall project.")
 
-st.subheader("Comparator Material (Supplier EPD)")
+st.subheader("Alternate Material")
 with st.expander("➕ Add comparator material"):
     epd_value = st.number_input(
-        "Enter supplier EPD value (kg CO₂e per m³ of material)",
+        "Enter given EPD value of an alternate concrete (kg CO₂e per m³ of material)",
         min_value=0.0,
         step=1.0,
         value=250.0,
-        help="Paste the GWP value from the supplier's EPD (usually A1–A3, per m³ of material)."
+        help="Paste the GWP value from the alternate's EPD (usually A1–A3, per m³ of material)."
     )
     thickness = st.number_input(
-        "Wall thickness of comparator material (m)",
+        "Wall thickness of alternate material (m)",
         min_value=0.05,
         max_value=1.0,
         step=0.05,
         value=0.30,
-        help="Enter the thickness of the comparator wall in meters (default 0.30 m)."
+        help="Enter the thickness of the alternate wall in meters (default 0.30 m)."
     )
     compare = st.checkbox("Compare hempcrete to this material")
 
